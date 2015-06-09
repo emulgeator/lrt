@@ -1,6 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+
+use Illuminate\Contracts\Console\Kernel;
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -28,12 +31,14 @@ $app = require_once __DIR__.'/bootstrap/app.php';
 |
 */
 
+/** @var Kernel $kernel */
 $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
 
 $status = $kernel->handle(
 	$input = new Symfony\Component\Console\Input\ArgvInput,
 	new Symfony\Component\Console\Output\ConsoleOutput
 );
+
 
 /*
 |--------------------------------------------------------------------------
