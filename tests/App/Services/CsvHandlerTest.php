@@ -65,20 +65,21 @@ class CsvHandlerTest extends TestCase {
 		$this->expectCheckIfFileExists($path, true);
 		$csvHandler = new CsvHandler($this->filesystemMock);
 		$expectedResult = array(array(
-			'favorites'   => 'favorites',
-			'from_url'    => 'from url',
-			'to_url'      => 'to url',
-			'anchor_text' => 'anchor text',
-			'link_status' => 'link status',
-			'type'        => 'type',
-			'bl_dom'      => 123456,
-			'dom_pop'     => 12345,
-			'power'       => 1,
-			'trust'       => 2,
-			'power_trust' => 3,
-			'alexa'       => null,
-			'ip'          => '50.116.50.37',
-			'country'     => 'US'
+			'favorites'         => 'favorites',
+			'from_url'          => 'http://fromUrl.com/test',
+			'from_url_hostname' => 'fromUrl.com',
+			'to_url'            => 'to url',
+			'anchor_text'       => 'anchor text',
+			'link_status'       => 'link status',
+			'type'              => 'type',
+			'bl_dom'            => 123456,
+			'dom_pop'           => 12345,
+			'power'             => 1,
+			'trust'             => 2,
+			'power_trust'       => 3,
+			'alexa'             => null,
+			'ip'                => '50.116.50.37',
+			'country'           => 'US'
 		));
 
 		$result = $csvHandler->getCsvContent($path);

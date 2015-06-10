@@ -29,6 +29,53 @@ class LinkHandlerTest extends TestCase {
 
 	}
 
+	/**
+	 * @test
+	 */
+	public function getAnchorOccurrenceStat_shouldRetrieveStatsFromDb() {
+		$expectedResult = array('test');
+		$dbManager = $this->expectGetDataFromDb($expectedResult);
+
+		$result = (new LinkHandler($dbManager))->getAnchorOccurrenceStat();
+
+		$this->assertEquals($expectedResult, $result);
+	}
+
+	/**
+	 * @test
+	 */
+	public function getLinkStatusOccurrenceStat_shouldRetrieveStatsFromDb() {
+		$expectedResult = array('test');
+		$dbManager = $this->expectGetDataFromDb($expectedResult);
+
+		$result = (new LinkHandler($dbManager))->getLinkStatusOccurrenceStat();
+
+		$this->assertEquals($expectedResult, $result);
+	}
+
+	/**
+	 * @test
+	 */
+	public function getFromUrlOccurrenceStat_shouldRetrieveStatsFromDb() {
+		$expectedResult = array('test');
+		$dbManager = $this->expectGetDataFromDb($expectedResult);
+
+		$result = (new LinkHandler($dbManager))->getFromUrlHostnameOccurrenceStat();
+
+		$this->assertEquals($expectedResult, $result);
+	}
+
+	/**
+	 * @test
+	 */
+	public function getBlDomOccurrenceStat_shouldRetrieveStatsFromDb() {
+		$expectedResult = array('test');
+		$dbManager = $this->expectGetDataFromDb($expectedResult);
+
+		$result = (new LinkHandler($dbManager))->getBlDomOccurrenceStat();
+
+		$this->assertEquals($expectedResult, $result);
+	}
 
 	protected function expectTruncate() {
 		$builderMock = Mockery::mock('\Illuminate\Database\Query\Builder')
@@ -36,7 +83,7 @@ class LinkHandlerTest extends TestCase {
 			->once()
 			->getMock();
 
-		return $this->getDatabaseManager($builderMock);
+		return $this->getDatabaseManagerWithTable($builderMock);
 	}
 
 
@@ -51,16 +98,30 @@ class LinkHandlerTest extends TestCase {
 				->getMock();
 		}
 
-		return $this->getDatabaseManager($builderMock);
+		return $this->getDatabaseManagerWithTable($builderMock);
 	}
 
 
-	protected function getDatabaseManager(Builder $builderMock) {
+	protected function getDatabaseManagerWithTable(Builder $builderMock) {
 		$dbConnectionMock = Mockery::mock('Illuminate\Database\Connection')
 			->shouldReceive('table')
 			->once()
 			->with('link')
 			->andReturn($builderMock)
+			->getMock();
+
+		return Mockery::mock('Illuminate\Database\DatabaseManager')
+			->shouldReceive('connection')
+			->once()
+			->andReturn($dbConnectionMock)
+			->getMock();
+	}
+
+	protected function expectGetDataFromDb($expectedResult) {
+		$dbConnectionMock = Mockery::mock('Illuminate\Database\Connection')
+			->shouldReceive('select')
+			->once()
+			->andReturn($expectedResult)
 			->getMock();
 
 		return Mockery::mock('Illuminate\Database\DatabaseManager')

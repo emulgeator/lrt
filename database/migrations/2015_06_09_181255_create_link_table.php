@@ -20,6 +20,7 @@ class CreateLinkTable extends Migration {
 			$table->increments('id');
 			$table->string('favorites');
 			$table->mediumText('from_url');
+			$table->mediumText('from_url_hostname');
 			$table->mediumText('to_url');
 			$table->mediumText('anchor_text');
 			$table->string('link_status');

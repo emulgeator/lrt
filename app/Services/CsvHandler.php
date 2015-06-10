@@ -52,8 +52,8 @@ class CsvHandler {
 		$columnsInCsv = $this->getCsvColumnNames();
 
 		$columns = array(
-			'favorites', 'from_url', 'to_url', 'anchor_text', 'link_status', 'type', 'bl_dom', 'dom_pop',
-			'power', 'trust', 'power_trust', 'alexa', 'ip', 'country'
+			'favorites', 'from_url', 'to_url', 'anchor_text', 'link_status', 'type', 'bl_dom',
+			'dom_pop', 'power', 'trust', 'power_trust', 'alexa', 'ip', 'country'
 		);
 
 		$isFirstRow = true;
@@ -68,12 +68,15 @@ class CsvHandler {
 			}
 			else {
 				$row = array_combine($columns, $row);
+
 				$row['bl_dom'] = $this->removeThousandSeparator($row['bl_dom']);
 				$row['dom_pop'] = $this->removeThousandSeparator($row['dom_pop']);
 				$row['power'] = $this->removeThousandSeparator($row['power']);
 				$row['trust'] = $this->removeThousandSeparator($row['trust']);
 				$row['power_trust'] = $this->removeThousandSeparator($row['power_trust']);
 				$row['alexa'] = $this->formatAlexaRanking($row['alexa']);
+				$row['from_url_hostname'] = parse_url($row['from_url'], PHP_URL_HOST);
+
 				$data[] = $row;
 			}
 		}
