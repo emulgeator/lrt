@@ -41,8 +41,9 @@ class CsvImporterCommand extends Command {
 	/**
 	 * Create a new command instance.
 	 *
-	 * @param Filesystem $filesystem
-	 * @param CsvHandler $csvHandler
+	 * @param Filesystem  $filesystem
+	 * @param CsvHandler  $csvHandler
+	 * @param LinkHandler $linkHandler
 	 */
 	public function __construct(Filesystem $filesystem, CsvHandler $csvHandler, LinkHandler $linkHandler)
 	{
@@ -60,14 +61,11 @@ class CsvImporterCommand extends Command {
 	 */
 	public function fire()
 	{
-		$path = $this->argument('path');
+		$path = (string)$this->argument('path');
 
-		if (!$this->filesystem->exists($path)) {
-			$this->error('Given path "' . $path . '" does not exist!');
-		}
+		$links = $this->csvHandler->getCsvContent($path);
 
 		$this->linkHandler->eraseLinks();
-		$links = $this->csvHandler->getCsvContent($path);
 		$this->linkHandler->storeLinks($links);
 	}
 

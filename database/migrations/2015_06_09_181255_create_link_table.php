@@ -29,7 +29,7 @@ class CreateLinkTable extends Migration {
 			$table->integer('power');
 			$table->integer('trust');
 			$table->integer('power_trust');
-			$table->string('Alexa');
+			$table->bigInteger('alexa')->nullable();
 			$table->string('ip');
 			$table->string('country');
 		});

@@ -5,17 +5,22 @@ use Illuminate\Database\Query\Builder;
 use Mockery;
 use App\Services\LinkHandler;
 
-class ExampleTest extends TestCase {
+class LinkHandlerTest extends TestCase {
 
-
-	public function testEraseLinks_shouldTruncateLinksTable() {
+	/**
+	 * @test
+	 */
+	public function eraseLinks_shouldTruncateLinksTable() {
 		$dbManager = $this->expectTruncate();
 
 		$linkHandler = new LinkHandler($dbManager);
 		$linkHandler->eraseLinks();
 	}
 
-	public function testStoreLinks_shouldCallInsertForEveryThousandRows() {
+	/**
+	 * @test
+	 */
+	public function storeLinks_shouldCallInsertForEveryThousandRows() {
 		$testData = range(1, 2000);
 
 		$dbManager = $this->expectInsert(array(range(1, 1000), range(1001, 2000)));
